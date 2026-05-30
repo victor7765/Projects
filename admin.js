@@ -75,6 +75,26 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // =====================================
+// LOGOUT BUTTON EVENT
+// =====================================
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    const logoutButton =
+        document.getElementById(
+            "logoutButton"
+        );
+
+    if(logoutButton){
+
+        logoutButton.addEventListener(
+            "click",
+            logout
+        );
+    }
+});
+
+// =====================================
 // PAGE LOAD AUTH CHECK
 // =====================================
 

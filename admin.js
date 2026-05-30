@@ -55,6 +55,26 @@ document.addEventListener(
 );
 
 // =====================================
+// LOGIN BUTTON EVENT
+// =====================================
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    const loginButton =
+        document.getElementById(
+            "loginButton"
+        );
+
+    if(loginButton){
+
+        loginButton.addEventListener(
+            "click",
+            login
+        );
+    }
+});
+
+// =====================================
 // PAGE LOAD AUTH CHECK
 // =====================================
 

@@ -71,3 +71,29 @@ body{
     font-size:24px;
     color:#dddddd;
 }
+
+.logout-button{
+
+    margin-bottom: 20px;
+
+    padding: 10px 20px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background: #111;
+
+    color: white;
+
+    cursor: pointer;
+
+    font-size: 16px;
+
+    transition: 0.3s;
+}
+
+.logout-button:hover{
+
+    opacity: 0.8;
+}

@@ -493,3 +493,98 @@ function loadAnalytics(){
             "browser"
         ) || "Unknown";
 }
+
+// =====================================
+// RESET ANALYTICS
+// =====================================
+
+function resetAnalytics(){
+
+    const confirmReset =
+        confirm(
+            "Are you sure you want to reset analytics?"
+        );
+
+    if(!confirmReset){
+        return;
+    }
+
+    localStorage.removeItem(
+        "siteVisits"
+    );
+
+    localStorage.removeItem(
+        "readingTime"
+    );
+
+    localStorage.removeItem(
+        "downloads"
+    );
+
+    loadAnalytics();
+
+    alert(
+        "Analytics reset."
+    );
+}
+
+// =====================================
+// EXPORT ANALYTICS
+// =====================================
+
+function exportAnalytics(){
+
+    const data = {
+
+        visits:
+            localStorage.getItem(
+                "siteVisits"
+            ) || 0,
+
+        readingTime:
+            localStorage.getItem(
+                "readingTime"
+            ) || 0,
+
+        downloads:
+            JSON.parse(
+                localStorage.getItem(
+                    "downloads"
+                )
+            ) || {}
+    };
+
+    const blob =
+        new Blob(
+            [
+                JSON.stringify(
+                    data,
+                    null,
+                    4
+                )
+            ],
+            {
+                type:
+                "application/json"
+            }
+        );
+
+    const url =
+        URL.createObjectURL(blob);
+
+    const a =
+        document.createElement("a");
+
+    a.href = url;
+
+    a.download =
+        "analytics.json";
+
+    document.body.appendChild(a);
+
+    a.click();
+
+    document.body.removeChild(a);
+
+    URL.revokeObjectURL(url);
+}

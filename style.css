@@ -1,0 +1,481 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    background:#030303;
+    color:white;
+    font-family:Arial, sans-serif;
+    overflow-x:hidden;
+}
+
+/* HEADER */
+
+header{
+    position:fixed;
+    top:0;
+    width:100%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:22px 60px;
+    background:rgba(0,0,0,0.92);
+    border-bottom:1px solid #6d5400;
+    z-index:1000;
+    backdrop-filter:blur(10px);
+}
+
+.logo{
+    color:#f0c419;
+    font-size:34px;
+    font-weight:bold;
+    letter-spacing:2px;
+}
+
+/* NAVIGATION */
+
+nav{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    flex-wrap:wrap;
+}
+
+nav a{
+    color:white;
+    text-decoration:none;
+    padding:10px 16px;
+    border-radius:10px;
+    transition:0.3s;
+    font-size:16px;
+    position:relative;
+}
+
+nav a:hover{
+    color:#f0c419;
+    background:rgba(240,196,25,0.08);
+}
+
+nav a::after{
+    content:'';
+    position:absolute;
+    left:14px;
+    bottom:6px;
+    width:0%;
+    height:2px;
+    background:#f0c419;
+    transition:0.3s;
+}
+
+nav a:hover::after{
+    width:60%;
+}
+
+.active{
+    color:#f0c419;
+}
+
+/* HERO */
+
+.hero,
+.about-hero,
+.contact-hero{
+    height:55vh;
+    background:url('images/hellgate7.png');
+    background-size:cover;
+    background-position:center;
+    position:relative;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+}
+
+.hero{
+    height:100vh;
+    align-items:flex-end;
+}
+
+/* OVERLAY */
+
+.overlay{
+    position:absolute;
+    width:100%;
+    height:100%;
+    background:linear-gradient(
+        to bottom,
+        rgba(0,0,0,0.35),
+        rgba(0,0,0,0.92)
+    );
+}
+
+/* HERO TEXT */
+
+.about-hero-content,
+.contact-hero-content{
+    position:relative;
+    z-index:2;
+    max-width:900px;
+    padding:20px;
+}
+
+.about-hero-content h1,
+.contact-hero-content h1{
+    font-size:72px;
+    color:#f0c419;
+    margin-bottom:25px;
+}
+
+.about-hero-content p,
+.contact-hero-content p{
+    font-size:26px;
+    color:#dddddd;
+    line-height:1.8;
+}
+
+/* HOMEPAGE FEATURED BOOK */
+
+.featured-book{
+    position:relative;
+    z-index:2;
+    margin-top:-140px;
+    padding:0 40px 100px;
+}
+
+.book-container{
+    background:rgba(7,7,7,0.96);
+    border:1px solid #5a4300;
+    border-radius:28px;
+    padding:45px;
+    max-width:900px;
+    margin:auto;
+    box-shadow:
+        0 0 40px rgba(0,0,0,0.8),
+        0 0 12px rgba(240,196,25,0.08);
+}
+
+.top-row{
+    display:flex;
+    align-items:center;
+    gap:18px;
+    margin-bottom:30px;
+    flex-wrap:wrap;
+}
+
+.book-title-small{
+    font-size:20px;
+    font-weight:bold;
+}
+
+.status-badge{
+    background:#990000;
+    padding:10px 18px;
+    border-radius:10px;
+    font-weight:bold;
+    font-size:15px;
+    letter-spacing:1px;
+}
+
+.book-container h1{
+    font-size:56px;
+    color:#f0c419;
+    margin-bottom:28px;
+    line-height:1.1;
+}
+
+.book-description{
+    font-size:21px;
+    line-height:1.8;
+    color:#cfcfcf;
+    margin-bottom:45px;
+}
+
+/* PROGRESS */
+
+.progress-section h2{
+    color:#f0c419;
+    margin-bottom:20px;
+    font-size:30px;
+}
+
+.progress-bar{
+    width:100%;
+    height:22px;
+    background:#191919;
+    border-radius:30px;
+    overflow:hidden;
+    margin-bottom:18px;
+}
+
+.progress-fill{
+    width:12.5%;
+    height:100%;
+    background:linear-gradient(
+        to right,
+        #c58d00,
+        #f0c419
+    );
+}
+
+.progress-text{
+    font-size:20px;
+    margin-bottom:10px;
+}
+
+.chapter-plan{
+    color:#8d8d8d;
+    font-size:18px;
+    margin-bottom:45px;
+}
+
+/* UPDATE BOX */
+
+.update-box{
+    background:#101010;
+    border-left:5px solid #f0c419;
+    padding:28px;
+    border-radius:10px;
+    margin-bottom:45px;
+}
+
+.update-box h3{
+    color:#f0c419;
+    margin-bottom:18px;
+    font-size:28px;
+}
+
+.update-box p{
+    font-size:18px;
+    line-height:1.7;
+    color:#d7d7d7;
+    margin-bottom:10px;
+}
+
+/* BUTTONS */
+
+.book-buttons{
+    display:flex;
+    gap:20px;
+    flex-wrap:wrap;
+}
+
+.book-buttons a{
+    background:#f0c419;
+    color:black;
+    text-decoration:none;
+    padding:16px 28px;
+    border-radius:12px;
+    font-size:18px;
+    font-weight:bold;
+    transition:0.3s;
+}
+
+.book-buttons a:hover{
+    transform:translateY(-4px);
+    box-shadow:0 0 15px rgba(240,196,25,0.4);
+}
+
+/* PAGE SECTIONS */
+
+.page-section{
+    padding:140px 70px 100px;
+    min-height:100vh;
+}
+
+.page-section h1{
+    color:#f0c419;
+    font-size:64px;
+    margin-bottom:30px;
+}
+
+.page-description{
+    font-size:22px;
+    color:#cccccc;
+    max-width:1100px;
+    line-height:1.8;
+    margin-bottom:60px;
+}
+
+/* GRIDS */
+
+.cards-grid,
+.contact-grid,
+.about-layout{
+    display:grid;
+    grid-template-columns:
+    repeat(auto-fit,minmax(320px,1fr));
+    gap:35px;
+}
+
+/* CARDS */
+
+.info-card,
+.contact-card,
+.about-box,
+.timeline-card{
+    background:#0d0d0d;
+    border:1px solid #5a4300;
+    border-radius:20px;
+    padding:40px;
+    transition:0.3s;
+}
+
+.info-card:hover,
+.contact-card:hover,
+.about-box:hover,
+.timeline-card:hover{
+    transform:translateY(-6px);
+    box-shadow:0 0 25px rgba(240,196,25,0.08);
+}
+
+.info-card h2,
+.contact-card h2,
+.about-box h2,
+.timeline-card h2{
+    color:#f0c419;
+    margin-bottom:20px;
+    font-size:30px;
+}
+
+.info-card p,
+.contact-card p,
+.about-box p,
+.timeline-card p{
+    color:#d0d0d0;
+    line-height:1.9;
+    font-size:18px;
+}
+
+/* TIMELINE */
+
+.timeline{
+    display:flex;
+    flex-direction:column;
+    gap:35px;
+}
+
+/* FOOTER */
+
+footer{
+    border-top:1px solid #5a4300;
+    padding:35px;
+    text-align:center;
+    color:#8d8d8d;
+    font-size:18px;
+}
+
+/* MOBILE */
+
+@media(max-width:900px){
+
+    header{
+        flex-direction:column;
+        gap:16px;
+        padding:20px;
+    }
+
+    .logo{
+        font-size:28px;
+    }
+
+    nav{
+        justify-content:center;
+    }
+
+    nav a{
+        font-size:15px;
+        padding:8px 12px;
+    }
+
+    .featured-book{
+        padding:0 20px 80px;
+        margin-top:-100px;
+    }
+
+    .book-container{
+        padding:30px;
+    }
+
+    .book-container h1{
+        font-size:40px;
+    }
+
+    .book-description{
+        font-size:18px;
+    }
+
+    .page-section{
+        padding:130px 20px 80px;
+    }
+
+    .page-section h1{
+        font-size:42px;
+    }
+
+    .page-description{
+        font-size:18px;
+    }
+
+    .about-hero-content h1,
+    .contact-hero-content h1{
+        font-size:48px;
+    }
+
+    .about-hero-content p,
+    .contact-hero-content p{
+        font-size:18px;
+    }
+
+    .book-buttons a{
+        width:100%;
+        text-align:center;
+    }
+
+    .info-card,
+    .contact-card,
+    .about-box,
+    .timeline-card{
+        padding:28px;
+    }
+}
+
+.books-hero,
+.updates-hero{
+    height:55vh;
+    background:url('images/hellgate7.png');
+    background-size:cover;
+    background-position:center;
+    position:relative;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+}
+
+.books-hero-content,
+.updates-hero-content{
+    position:relative;
+    z-index:2;
+    max-width:900px;
+    padding:20px;
+}
+
+.books-hero-content h1,
+.updates-hero-content h1{
+    font-size:72px;
+    color:#f0c419;
+    margin-bottom:25px;
+}
+
+.books-hero-content p,
+.updates-hero-content p{
+    font-size:26px;
+    color:#dddddd;
+    line-height:1.8;
+}

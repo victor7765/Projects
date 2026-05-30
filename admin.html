@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Admin Dashboard</title>
+
+    <link rel="stylesheet" href="admin.css">
+
+    <script defer src="admin.js"></script>
+
+</head>
+
+<body>
+
+    <div class="login-screen" id="loginScreen">
+
+        <h1>
+
+            Admin Access
+
+        </h1>
+
+        <input
+            type="password"
+            id="passkey"
+            placeholder="Enter Passkey"
+        >
+
+        <button onclick="login()">
+
+            Enter
+
+        </button>
+
+    </div>
+
+    <div class="dashboard" id="dashboard">
+
+        <h1>
+
+            Website Analytics
+
+        </h1>
+
+        <div class="analytics-grid">
+
+            <div class="analytics-card">
+
+                <h2>Total Visits</h2>
+
+                <p id="visits"></p>
+
+            </div>
+
+            <div class="analytics-card">
+
+                <h2>Total Reading Time</h2>
+
+                <p id="readingTime"></p>
+
+            </div>
+
+            <div class="analytics-card">
+
+                <h2>Downloads</h2>
+
+                <div id="downloads"></div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

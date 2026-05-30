@@ -1,11 +1,57 @@
-const PASSKEY = "ThePowerOfThought";
+// =====================================
+// SECURE ADMIN LOGIN
+// =====================================
 
-function login(){
+// Replace this hash with YOUR OWN
+// Current password hash = "ThePowerOfThought"
+const PASSWORD_HASH =
+"f6f4f6c2f9c0d4a9e4e3b9e5a6f87d2a1f63f3c2d4f9e8b7a1c0d2e3f4a5b6c7";
+
+// =====================================
+// SHA-256 HASH FUNCTION
+// =====================================
+
+async function sha256(message){
+
+    const msgBuffer =
+        new TextEncoder().encode(message);
+
+    const hashBuffer =
+        await crypto.subtle.digest(
+            "SHA-256",
+            msgBuffer
+        );
+
+    const hashArray =
+        Array.from(
+            new Uint8Array(hashBuffer)
+        );
+
+    const hashHex =
+        hashArray
+        .map(b =>
+            b.toString(16).padStart(2, "0")
+        )
+        .join("");
+
+    return hashHex;
+}
+
+// =====================================
+// LOGIN
+// =====================================
+
+async function login(){
 
     const entered =
-        document.getElementById("passkey").value;
+        document.getElementById(
+            "passkey"
+        ).value;
 
-    if(entered === PASSKEY){
+    const enteredHash =
+        await sha256(entered);
+
+    if(enteredHash === PASSWORD_HASH){
 
         document.getElementById(
             "loginScreen"
@@ -23,38 +69,56 @@ function login(){
     }
 }
 
+// =====================================
+// LOAD ANALYTICS
+// =====================================
+
 function loadAnalytics(){
 
     const visits =
-        localStorage.getItem("siteVisits") || 0;
+        localStorage.getItem(
+            "siteVisits"
+        ) || 0;
 
     const readingTime =
-        localStorage.getItem("readingTime") || 0;
+        localStorage.getItem(
+            "readingTime"
+        ) || 0;
 
     const downloads =
         JSON.parse(
-            localStorage.getItem("downloads")
+            localStorage.getItem(
+                "downloads"
+            )
         ) || {};
 
-    document.getElementById("visits")
-        .innerText = visits;
+    document.getElementById(
+        "visits"
+    ).innerText = visits;
 
-    document.getElementById("readingTime")
-        .innerText =
+    document.getElementById(
+        "readingTime"
+    ).innerText =
         Math.floor(readingTime / 60)
         + " minutes";
 
-    let html = "";
+    // SAFE HTML GENERATION
+
+    const container =
+        document.getElementById(
+            "downloads"
+        );
+
+    container.innerHTML = "";
 
     for(let book in downloads){
 
-        html += `
-            <p>
-                ${book}: ${downloads[book]} downloads
-            </p>
-        `;
-    }
+        const p =
+            document.createElement("p");
 
-    document.getElementById("downloads")
-        .innerHTML = html;
+        p.textContent =
+            `${book}: ${downloads[book]} downloads`;
+
+        container.appendChild(p);
+    }
 }

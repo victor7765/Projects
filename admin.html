@@ -3,22 +3,27 @@
 
 <head>
 
+    <!-- ================================= -->
+    <!-- SECURITY SETTINGS -->
+    <!-- ================================= -->
+
     <meta
     http-equiv="Content-Security-Policy"
     content="
     default-src 'self';
     img-src 'self' https:;
     style-src 'self' 'unsafe-inline';
-    script-src 'self' 'unsafe-inline';
+    script-src 'self';
     object-src 'none';
     base-uri 'self';
+    form-action 'self';
     ">
 
     <meta
     http-equiv="X-Frame-Options"
     content="DENY"
     >
-    
+
     <meta
     name="referrer"
     content="strict-origin-when-cross-origin"
@@ -31,7 +36,11 @@
     microphone=(),
     camera=()
     ">
-    
+
+    <!-- ================================= -->
+    <!-- META -->
+    <!-- ================================= -->
+
     <meta charset="UTF-8">
 
     <meta
@@ -39,17 +48,42 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>Admin Dashboard</title>
+    <title>
 
-    <link rel="stylesheet" href="admin.css">
+        Secure Admin Dashboard
 
-    <script defer src="admin.js"></script>
+    </title>
+
+    <!-- ================================= -->
+    <!-- CSS -->
+    <!-- ================================= -->
+
+    <link
+        rel="stylesheet"
+        href="admin.css"
+    >
+
+    <!-- ================================= -->
+    <!-- JS -->
+    <!-- ================================= -->
+
+    <script
+        defer
+        src="admin.js"
+    ></script>
 
 </head>
 
 <body>
 
-    <div class="login-screen" id="loginScreen">
+    <!-- ================================= -->
+    <!-- LOGIN SCREEN -->
+    <!-- ================================= -->
+
+    <div
+        class="login-screen"
+        id="loginScreen"
+    >
 
         <h1>
 
@@ -61,6 +95,7 @@
             type="password"
             id="passkey"
             placeholder="Enter Passkey"
+            autocomplete="off"
         >
 
         <button onclick="login()">
@@ -71,7 +106,15 @@
 
     </div>
 
-    <div class="dashboard" id="dashboard">
+    <!-- ================================= -->
+    <!-- DASHBOARD -->
+    <!-- ================================= -->
+
+    <div
+        class="dashboard"
+        id="dashboard"
+        style="display: none;"
+    >
 
         <h1>
 
@@ -79,29 +122,72 @@
 
         </h1>
 
+        <!-- LOGOUT BUTTON -->
+
+        <button
+            onclick="logout()"
+            class="logout-button"
+        >
+
+            Logout
+
+        </button>
+
+        <!-- ================================= -->
+        <!-- ANALYTICS GRID -->
+        <!-- ================================= -->
+
         <div class="analytics-grid">
 
+            <!-- VISITS -->
+
             <div class="analytics-card">
 
-                <h2>Total Visits</h2>
+                <h2>
 
-                <p id="visits"></p>
+                    Total Visits
+
+                </h2>
+
+                <p id="visits">
+
+                    0
+
+                </p>
 
             </div>
 
+            <!-- READING TIME -->
+
             <div class="analytics-card">
 
-                <h2>Total Reading Time</h2>
+                <h2>
 
-                <p id="readingTime"></p>
+                    Total Reading Time
+
+                </h2>
+
+                <p id="readingTime">
+
+                    0 Minutes
+
+                </p>
 
             </div>
 
+            <!-- DOWNLOADS -->
+
             <div class="analytics-card">
 
-                <h2>Downloads</h2>
+                <h2>
 
-                <div id="downloads"></div>
+                    Downloads
+
+                </h2>
+
+                <div id="downloads">
+
+                </div>
 
             </div>
 
@@ -110,4 +196,5 @@
     </div>
 
 </body>
+
 </html>

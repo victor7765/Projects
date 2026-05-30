@@ -1,9 +1,6 @@
 // =====================================
 // SECURE ADMIN LOGIN
 // =====================================
-
-// Replace this hash with YOUR OWN
-// Current password hash = "ThePowerOfThought"
 const PASSWORD_HASH =
 "f6f4f6c2f9c0d4a9e4e3b9e5a6f87d2a1f63f3c2d4f9e8b7a1c0d2e3f4a5b6c7";
 

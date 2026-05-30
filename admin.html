@@ -69,6 +69,11 @@
 
     <script
         defer
+        src="app.js"
+    ></script>
+
+    <script
+        defer
         src="admin.js"
     ></script>
 
@@ -85,24 +90,41 @@
         id="loginScreen"
     >
 
-        <h1>
+        <div class="login-box">
 
-            Admin Access
+            <h1>
 
-        </h1>
+                Admin Access
 
-        <input
-            type="password"
-            id="passkey"
-            placeholder="Enter Passkey"
-            autocomplete="off"
-        >
+            </h1>
 
-        <button onclick="login()">
+            <p class="subtitle">
 
-            Enter
+                Secure Analytics Control Panel
 
-        </button>
+            </p>
+
+            <input
+                type="password"
+                id="passkey"
+                placeholder="Enter Passkey"
+                autocomplete="off"
+            >
+
+            <button onclick="login()">
+
+                Enter Dashboard
+
+            </button>
+
+            <p
+                class="security-warning"
+                id="securityWarning"
+            >
+
+            </p>
+
+        </div>
 
     </div>
 
@@ -116,22 +138,58 @@
         style="display: none;"
     >
 
-        <h1>
+        <!-- HEADER -->
 
-            Website Analytics
+        <div class="dashboard-header">
 
-        </h1>
+            <div>
 
-        <!-- LOGOUT BUTTON -->
+                <h1>
 
-        <button
-            onclick="logout()"
-            class="logout-button"
-        >
+                    Website Analytics
 
-            Logout
+                </h1>
 
-        </button>
+                <p class="dashboard-subtitle">
+
+                    Advanced Tracking & Monitoring
+
+                </p>
+
+            </div>
+
+            <div class="dashboard-buttons">
+
+                <button
+                    onclick="exportAnalytics()"
+                    class="export-button"
+                >
+
+                    Export Analytics
+
+                </button>
+
+                <button
+                    onclick="resetAnalytics()"
+                    class="reset-button"
+                >
+
+                    Reset Analytics
+
+                </button>
+
+                <button
+                    onclick="logout()"
+                    class="logout-button"
+                >
+
+                    Logout
+
+                </button>
+
+            </div>
+
+        </div>
 
         <!-- ================================= -->
         <!-- ANALYTICS GRID -->
@@ -139,7 +197,7 @@
 
         <div class="analytics-grid">
 
-            <!-- VISITS -->
+            <!-- TOTAL VISITS -->
 
             <div class="analytics-card">
 
@@ -163,7 +221,7 @@
 
                 <h2>
 
-                    Total Reading Time
+                    Reading Time
 
                 </h2>
 
@@ -175,9 +233,117 @@
 
             </div>
 
-            <!-- DOWNLOADS -->
+            <!-- ACTIVE USERS -->
 
             <div class="analytics-card">
+
+                <h2>
+
+                    Active Users
+
+                </h2>
+
+                <p id="activeUsers">
+
+                    0
+
+                </p>
+
+            </div>
+
+            <!-- DEVICE -->
+
+            <div class="analytics-card">
+
+                <h2>
+
+                    Last Device
+
+                </h2>
+
+                <p id="device">
+
+                    Unknown
+
+                </p>
+
+            </div>
+
+            <!-- LAST VISIT -->
+
+            <div class="analytics-card">
+
+                <h2>
+
+                    Last Visit
+
+                </h2>
+
+                <p id="lastVisit">
+
+                    None
+
+                </p>
+
+            </div>
+
+            <!-- ADMIN SESSIONS -->
+
+            <div class="analytics-card">
+
+                <h2>
+
+                    Admin Sessions
+
+                </h2>
+
+                <p id="adminSessions">
+
+                    0
+
+                </p>
+
+            </div>
+
+            <!-- FAILED ATTEMPTS -->
+
+            <div class="analytics-card">
+
+                <h2>
+
+                    Failed Logins
+
+                </h2>
+
+                <p id="failedAttempts">
+
+                    0
+
+                </p>
+
+            </div>
+
+            <!-- TOP DOWNLOAD -->
+
+            <div class="analytics-card">
+
+                <h2>
+
+                    Top Download
+
+                </h2>
+
+                <p id="topDownload">
+
+                    None
+
+                </p>
+
+            </div>
+
+            <!-- DOWNLOADS -->
+
+            <div class="analytics-card large-card">
 
                 <h2>
 
@@ -186,6 +352,38 @@
                 </h2>
 
                 <div id="downloads">
+
+                </div>
+
+            </div>
+
+            <!-- DAILY VISITS -->
+
+            <div class="analytics-card large-card">
+
+                <h2>
+
+                    Daily Visits
+
+                </h2>
+
+                <div id="dailyVisits">
+
+                </div>
+
+            </div>
+
+            <!-- BROWSER -->
+
+            <div class="analytics-card large-card">
+
+                <h2>
+
+                    Browser Info
+
+                </h2>
+
+                <div id="browser">
 
                 </div>
 

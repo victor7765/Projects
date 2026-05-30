@@ -95,6 +95,76 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // =====================================
+// BUTTON EVENTS
+// =====================================
+
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
+
+        // LOGIN BUTTON
+
+        const loginButton =
+            document.getElementById(
+                "loginButton"
+            );
+
+        if(loginButton){
+
+            loginButton.addEventListener(
+                "click",
+                login
+            );
+        }
+
+        // LOGOUT BUTTON
+
+        const logoutButton =
+            document.getElementById(
+                "logoutButton"
+            );
+
+        if(logoutButton){
+
+            logoutButton.addEventListener(
+                "click",
+                logout
+            );
+        }
+
+        // RESET ANALYTICS BUTTON
+
+        const resetButton =
+            document.getElementById(
+                "resetButton"
+            );
+
+        if(resetButton){
+
+            resetButton.addEventListener(
+                "click",
+                resetAnalytics
+            );
+        }
+
+        // EXPORT BUTTON
+
+        const exportButton =
+            document.getElementById(
+                "exportButton"
+            );
+
+        if(exportButton){
+
+            exportButton.addEventListener(
+                "click",
+                exportAnalytics
+            );
+        }
+    }
+);
+
+// =====================================
 // PAGE LOAD AUTH CHECK
 // =====================================
 

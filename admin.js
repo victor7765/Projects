@@ -1,8 +1,43 @@
 // =====================================
-// SECURE ADMIN LOGIN
+// SECURITY SETTINGS
 // =====================================
+
 const PASSWORD_HASH =
 "f93c41d14b9ba1824f4d584812cce5216c20535a2cc64bffd475bce657bef161";
+
+let failedAttempts = 0;
+
+const MAX_ATTEMPTS = 5;
+
+// =====================================
+// DISABLE RIGHT CLICK
+// =====================================
+
+document.addEventListener(
+    "contextmenu",
+    event => event.preventDefault()
+);
+
+// =====================================
+// PAGE LOAD AUTH CHECK
+// =====================================
+
+window.onload = function(){
+
+    const authenticated =
+        localStorage.getItem(
+            "adminAuthenticated"
+        );
+
+    if(authenticated === "true"){
+
+        showDashboard();
+
+    }else{
+
+        showLogin();
+    }
+};
 
 // =====================================
 // SHA-256 HASH FUNCTION
@@ -40,6 +75,15 @@ async function sha256(message){
 
 async function login(){
 
+    if(failedAttempts >= MAX_ATTEMPTS){
+
+        alert(
+            "Too many failed attempts."
+        );
+
+        return;
+    }
+
     const entered =
         document.getElementById(
             "passkey"
@@ -50,20 +94,68 @@ async function login(){
 
     if(enteredHash === PASSWORD_HASH){
 
-        document.getElementById(
-            "loginScreen"
-        ).style.display = "none";
+        localStorage.setItem(
+            "adminAuthenticated",
+            "true"
+        );
 
-        document.getElementById(
-            "dashboard"
-        ).style.display = "block";
+        failedAttempts = 0;
 
-        loadAnalytics();
+        showDashboard();
 
     }else{
 
-        alert("Incorrect Passkey");
+        failedAttempts++;
+
+        alert(
+            "Incorrect Passkey"
+        );
     }
+}
+
+// =====================================
+// LOGOUT
+// =====================================
+
+function logout(){
+
+    localStorage.removeItem(
+        "adminAuthenticated"
+    );
+
+    location.reload();
+}
+
+// =====================================
+// SHOW DASHBOARD
+// =====================================
+
+function showDashboard(){
+
+    document.getElementById(
+        "loginScreen"
+    ).style.display = "none";
+
+    document.getElementById(
+        "dashboard"
+    ).style.display = "block";
+
+    loadAnalytics();
+}
+
+// =====================================
+// SHOW LOGIN
+// =====================================
+
+function showLogin(){
+
+    document.getElementById(
+        "loginScreen"
+    ).style.display = "block";
+
+    document.getElementById(
+        "dashboard"
+    ).style.display = "none";
 }
 
 // =====================================
@@ -99,7 +191,9 @@ function loadAnalytics(){
         Math.floor(readingTime / 60)
         + " minutes";
 
-    // SAFE HTML GENERATION
+    // =================================
+    // SAFE DOWNLOAD RENDERING
+    // =================================
 
     const container =
         document.getElementById(

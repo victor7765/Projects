@@ -2,7 +2,7 @@
 // SECURE ADMIN LOGIN
 // =====================================
 const PASSWORD_HASH =
-"d46d4b092b6d6afb086d59816b37785320406b14c6c77250d61ff2592321ec1b";
+"f93c41d14b9ba1824f4d584812cce5216c20535a2cc64bffd475bce657bef161";
 
 // =====================================
 // SHA-256 HASH FUNCTION

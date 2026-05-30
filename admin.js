@@ -5,7 +5,12 @@
 const PASSWORD_HASH =
 "f93c41d14b9ba1824f4d584812cce5216c20535a2cc64bffd475bce657bef161";
 
-let failedAttempts = 0;
+let failedAttempts =
+    parseInt(
+        localStorage.getItem(
+            "failedAttempts"
+        )
+    ) || 0;
 
 const MAX_ATTEMPTS = 5;
 
@@ -16,6 +21,37 @@ const MAX_ATTEMPTS = 5;
 document.addEventListener(
     "contextmenu",
     event => event.preventDefault()
+);
+
+// =====================================
+// DISABLE DEVTOOLS SHORTCUTS
+// =====================================
+
+document.addEventListener(
+    "keydown",
+    function(event){
+
+        if(
+            event.key === "F12"
+            ||
+            (
+                event.ctrlKey
+                &&
+                event.shiftKey
+                &&
+                (
+                    event.key === "I"
+                    ||
+                    event.key === "J"
+                    ||
+                    event.key === "C"
+                )
+            )
+        ){
+
+            event.preventDefault();
+        }
+    }
 );
 
 // =====================================
@@ -46,7 +82,9 @@ window.onload = function(){
 async function sha256(message){
 
     const msgBuffer =
-        new TextEncoder().encode(message);
+        new TextEncoder().encode(
+            message
+        );
 
     const hashBuffer =
         await crypto.subtle.digest(
@@ -56,13 +94,16 @@ async function sha256(message){
 
     const hashArray =
         Array.from(
-            new Uint8Array(hashBuffer)
+            new Uint8Array(
+                hashBuffer
+            )
         );
 
     const hashHex =
         hashArray
         .map(b =>
-            b.toString(16).padStart(2, "0")
+            b.toString(16)
+            .padStart(2, "0")
         )
         .join("");
 
@@ -75,11 +116,15 @@ async function sha256(message){
 
 async function login(){
 
+    const warning =
+        document.getElementById(
+            "securityWarning"
+        );
+
     if(failedAttempts >= MAX_ATTEMPTS){
 
-        alert(
-            "Too many failed attempts."
-        );
+        warning.textContent =
+            "Too many failed attempts.";
 
         return;
     }
@@ -90,9 +135,15 @@ async function login(){
         ).value;
 
     const enteredHash =
-        await sha256(entered);
+        await sha256(
+            entered
+        );
 
-    if(enteredHash === PASSWORD_HASH){
+    if(
+        enteredHash
+        ===
+        PASSWORD_HASH
+    ){
 
         localStorage.setItem(
             "adminAuthenticated",
@@ -101,15 +152,32 @@ async function login(){
 
         failedAttempts = 0;
 
+        localStorage.setItem(
+            "failedAttempts",
+            0
+        );
+
+        // TRACK ADMIN SESSION
+
+        trackAdminSession();
+
         showDashboard();
 
     }else{
 
         failedAttempts++;
 
-        alert(
-            "Incorrect Passkey"
+        localStorage.setItem(
+            "failedAttempts",
+            failedAttempts
         );
+
+        // TRACK FAILED LOGIN
+
+        trackFailedLogin();
+
+        warning.textContent =
+            `Incorrect Passkey (${failedAttempts}/${MAX_ATTEMPTS})`;
     }
 }
 
@@ -141,6 +209,8 @@ function showDashboard(){
     ).style.display = "block";
 
     loadAnalytics();
+
+    resetInactivityTimer();
 }
 
 // =====================================
@@ -151,7 +221,7 @@ function showLogin(){
 
     document.getElementById(
         "loginScreen"
-    ).style.display = "block";
+    ).style.display = "flex";
 
     document.getElementById(
         "dashboard"
@@ -164,15 +234,87 @@ function showLogin(){
 
 function loadAnalytics(){
 
+    // VISITS
+
     const visits =
         localStorage.getItem(
             "siteVisits"
         ) || 0;
 
+    document.getElementById(
+        "visits"
+    ).innerText = visits;
+
+    // READING TIME
+
     const readingTime =
         localStorage.getItem(
             "readingTime"
         ) || 0;
+
+    document.getElementById(
+        "readingTime"
+    ).innerText =
+        Math.floor(
+            readingTime / 60
+        ) + " minutes";
+
+    // ACTIVE USERS
+
+    document.getElementById(
+        "activeUsers"
+    ).innerText =
+        localStorage.getItem(
+            "activeUsers"
+        ) || 0;
+
+    // DEVICE
+
+    document.getElementById(
+        "device"
+    ).innerText =
+        localStorage.getItem(
+            "lastDevice"
+        ) || "Unknown";
+
+    // LAST VISIT
+
+    document.getElementById(
+        "lastVisit"
+    ).innerText =
+        localStorage.getItem(
+            "lastVisit"
+        ) || "None";
+
+    // ADMIN SESSIONS
+
+    document.getElementById(
+        "adminSessions"
+    ).innerText =
+        localStorage.getItem(
+            "adminSessions"
+        ) || 0;
+
+    // FAILED ATTEMPTS
+
+    document.getElementById(
+        "failedAttempts"
+    ).innerText =
+        localStorage.getItem(
+            "failedAttempts"
+        ) || 0;
+
+    // TOP DOWNLOAD
+
+    const top =
+        getTopDownload();
+
+    document.getElementById(
+        "topDownload"
+    ).innerText =
+        `${top.book} (${top.count})`;
+
+    // DOWNLOADS
 
     const downloads =
         JSON.parse(
@@ -181,35 +323,63 @@ function loadAnalytics(){
             )
         ) || {};
 
-    document.getElementById(
-        "visits"
-    ).innerText = visits;
-
-    document.getElementById(
-        "readingTime"
-    ).innerText =
-        Math.floor(readingTime / 60)
-        + " minutes";
-
-    // =================================
-    // SAFE DOWNLOAD RENDERING
-    // =================================
-
-    const container =
+    const downloadsContainer =
         document.getElementById(
             "downloads"
         );
 
-    container.innerHTML = "";
+    downloadsContainer.innerHTML = "";
 
     for(let book in downloads){
 
         const p =
-            document.createElement("p");
+            document.createElement(
+                "p"
+            );
 
         p.textContent =
             `${book}: ${downloads[book]} downloads`;
 
-        container.appendChild(p);
+        downloadsContainer
+        .appendChild(p);
     }
+
+    // DAILY VISITS
+
+    const daily =
+        JSON.parse(
+            localStorage.getItem(
+                "dailyVisits"
+            )
+        ) || {};
+
+    const dailyContainer =
+        document.getElementById(
+            "dailyVisits"
+        );
+
+    dailyContainer.innerHTML = "";
+
+    for(let date in daily){
+
+        const p =
+            document.createElement(
+                "p"
+            );
+
+        p.textContent =
+            `${date}: ${daily[date]} visits`;
+
+        dailyContainer
+        .appendChild(p);
+    }
+
+    // BROWSER INFO
+
+    document.getElementById(
+        "browser"
+    ).textContent =
+        localStorage.getItem(
+            "browser"
+        ) || "Unknown";
 }
